@@ -55,12 +55,12 @@ export const products = [
   },
   {
     id: 7,
-    name: "Рулет курячий (100г)",
-    weight: 100,
-    calories: 102,
-    protein: 22,
-    fat: 1.5,
-    carbs: 0.2,
+    name: "Рулет курячий (50г)",
+    weight: 50,
+    calories: 51,
+    protein: 11,
+    fat: 0.75,
+    carbs: 0.1,
   },
   {
     id: 8,
