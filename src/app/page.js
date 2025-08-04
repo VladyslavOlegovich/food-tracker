@@ -1,103 +1,219 @@
-import Image from "next/image";
-
+"use client";
+import { useState, useEffect } from "react";
+// import ProductSelect from "@/components/ProductSelect";
+import { products } from "./data/products";
+import ProductSelect from "./components/ProductSelect";
+ProductSelect;
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [meal, setMeal] = useState([]);
+  const [summary, setSummary] = useState(null);
+  const [showCustomForm, setShowCustomForm] = useState(false);
+  const [customProduct, setCustomProduct] = useState({
+    name: "",
+    calories: "",
+    protein: "",
+    fat: "",
+    carbs: "",
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  // Завантажуємо історію з LocalStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("meal");
+    if (saved) setMeal(JSON.parse(saved));
+  }, []);
+
+  // Зберігаємо історію в LocalStorage
+  useEffect(() => {
+    localStorage.setItem("meal", JSON.stringify(meal));
+  }, [meal]);
+
+  const addProduct = (product) => {
+    setMeal((prev) => [...prev, product]);
+  };
+
+  const calculateMeal = () => {
+    const total = meal.reduce(
+      (acc, p) => ({
+        calories: acc.calories + p.calories,
+        protein: acc.protein + p.protein,
+        fat: acc.fat + p.fat,
+        carbs: acc.carbs + p.carbs,
+      }),
+      { calories: 0, protein: 0, fat: 0, carbs: 0 }
+    );
+
+    // Округлення до двох знаків після коми
+    const roundedTotal = {
+      calories: Number(total.calories.toFixed(2)),
+      protein: Number(total.protein.toFixed(2)),
+      fat: Number(total.fat.toFixed(2)),
+      carbs: Number(total.carbs.toFixed(2)),
+    };
+
+    setSummary(roundedTotal);
+  };
+
+  const clearMeal = () => {
+    setMeal([]);
+    setSummary(null);
+    localStorage.removeItem("meal");
+  };
+
+  const handleCustomSubmit = (e) => {
+    e.preventDefault();
+
+    const product = {
+      id: Date.now(),
+      name: customProduct.name || "Мій продукт",
+      calories: Number(customProduct.calories) || 0,
+      protein: Number(customProduct.protein) || 0,
+      fat: Number(customProduct.fat) || 0,
+      carbs: Number(customProduct.carbs) || 0,
+    };
+
+    addProduct(product);
+    setCustomProduct({
+      name: "",
+      calories: "",
+      protein: "",
+      fat: "",
+      carbs: "",
+    });
+    setShowCustomForm(false);
+  };
+
+  return (
+    <main className="p-6 max-w-xl mx-auto space-y-4">
+      <h1 className="text-2xl font-bold">🍽 Мій прийом їжі</h1>
+
+      <ProductSelect products={products} onAdd={addProduct} />
+
+      <button
+        className="bg-purple-500 text-white px-4 py-2 rounded"
+        onClick={() => setShowCustomForm(!showCustomForm)}
+      >
+        {showCustomForm ? "Скасувати" : "➕ Додати свій продукт"}
+      </button>
+
+      {showCustomForm && (
+        <form
+          onSubmit={handleCustomSubmit}
+          className="space-y-2 border p-3 rounded bg-gray-50"
+        >
+          <input
+            type="text"
+            placeholder="Назва продукту"
+            className="w-full border p-2 rounded"
+            value={customProduct.name}
+            onChange={(e) =>
+              setCustomProduct({ ...customProduct, name: e.target.value })
+            }
+          />
+          <div className="grid grid-cols-4 gap-2">
+            <input
+              type="number"
+              placeholder="Ккал"
+              className="border p-2 rounded"
+              value={customProduct.calories}
+              onChange={(e) =>
+                setCustomProduct({ ...customProduct, calories: e.target.value })
+              }
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <input
+              type="number"
+              placeholder="Б"
+              className="border p-2 rounded"
+              value={customProduct.protein}
+              onChange={(e) =>
+                setCustomProduct({ ...customProduct, protein: e.target.value })
+              }
+            />
+            <input
+              type="number"
+              placeholder="Ж"
+              className="border p-2 rounded"
+              value={customProduct.fat}
+              onChange={(e) =>
+                setCustomProduct({ ...customProduct, fat: e.target.value })
+              }
+            />
+            <input
+              type="number"
+              placeholder="В"
+              className="border p-2 rounded"
+              value={customProduct.carbs}
+              onChange={(e) =>
+                setCustomProduct({ ...customProduct, carbs: e.target.value })
+              }
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded w-full"
           >
-            Read our docs
-          </a>
+            Додати продукт
+          </button>
+        </form>
+      )}
+
+      <ul className="border rounded p-2">
+        {meal.map((item, index) => (
+          <li key={index} className="flex justify-between border-b py-1">
+            <span>{item.name}</span>
+            <span>{item.calories} ккал</span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex gap-2">
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded"
+          onClick={calculateMeal}
+        >
+          Сформувати прийом
+        </button>
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded"
+          onClick={clearMeal}
+        >
+          Очистити
+        </button>
+      </div>
+
+      {summary && (
+        // <div className="border p-3 rounded bg-gray-100">
+        //   <h2 className="font-bold mb-2">Разом:</h2>
+        //   <p>Ккал: {summary.calories}</p>
+        //   <p>Б: {summary.protein} г</p>
+        //   <p>Ж: {summary.fat} г</p>
+        //   <p>В: {summary.carbs} г</p>
+        // </div>
+        <div className="border p-3 rounded bg-gray-100 relative">
+          <h2 className="font-bold mb-2">Разом:</h2>
+          <p>Ккал: {summary.calories}</p>
+          <p>Б: {summary.protein} г</p>
+          <p>Ж: {summary.fat} г</p>
+          <p>В: {summary.carbs} г</p>
+
+          <button
+            className="mt-3 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+            onClick={() => {
+              const textToCopy = `
+Ккал: ${summary.calories}
+Б: ${summary.protein} г
+Ж: ${summary.fat} г
+В: ${summary.carbs} г`;
+              navigator.clipboard
+                .writeText(textToCopy)
+                .then(() => alert("✅ Скопійовано в буфер обміну!"))
+                .catch(() => alert("❌ Не вдалося скопіювати"));
+            }}
+          >
+            Скопіювати
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      )}
+    </main>
   );
 }
