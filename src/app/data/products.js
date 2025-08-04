@@ -116,4 +116,22 @@ export const products = [
     fat: 3.54,
     carbs: 30.6,
   },
+  {
+    id: 14,
+    name: "Кус Кус (1шт)",
+    weight: 50,
+    calories: 174.5,
+    protein: 5.9,
+    fat: 0.75,
+    carbs: 36,
+  },
+  {
+    id: 15,
+    name: "Хек філе (100г)",
+    weight: 100,
+    calories: 111,
+    protein: 17.2,
+    fat: 4.7,
+    carbs: 0,
+  },
 ];
