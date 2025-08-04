@@ -28,12 +28,12 @@ export const products = [
   },
   {
     id: 4,
-    name: "Вівсянка (40г)",
-    weight: 40,
-    calories: 150,
-    protein: 5,
-    fat: 3,
-    carbs: 27,
+    name: "молоко безлактозне 2.5% (100г)",
+    weight: 100,
+    calories: 53,
+    protein: 3,
+    fat: 2.5,
+    carbs: 4.7,
   },
   {
     id: 5,
