@@ -118,7 +118,7 @@ export const products = [
   },
   {
     id: 14,
-    name: "Кус Кус (1шт)",
+    name: "Кус Кус (50г)",
     weight: 50,
     calories: 174.5,
     protein: 5.9,
