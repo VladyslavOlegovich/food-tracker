@@ -134,4 +134,13 @@ export const products = [
     fat: 4.7,
     carbs: 0,
   },
+  {
+    id: 16,
+    name: "Куряче філе (50г)",
+    weight: 50,
+    calories: 56.5,
+    protein: 12,
+    fat: 1,
+    carbs: 0.2,
+  },
 ];
