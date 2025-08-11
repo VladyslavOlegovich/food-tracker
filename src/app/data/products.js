@@ -152,4 +152,13 @@ export const products = [
     fat: 1,
     carbs: 0.2,
   },
+  {
+    id: 18,
+    name: "протеїн з молоком 1% (35г/300г)",
+    weight: 350,
+    calories: 254,
+    protein: 40,
+    fat: 3,
+    carbs: 14.1,
+  },
 ];
