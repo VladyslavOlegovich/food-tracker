@@ -126,6 +126,15 @@ export const products = [
     carbs: 36,
   },
   {
+    id: 17,
+    name: "Лаваш Вірменський тонкий 1шт (40г)",
+    weight: 40,
+    calories: 90.8,
+    protein: 2.88,
+    fat: 0.36,
+    carbs: 18.96,
+  },
+  {
     id: 15,
     name: "Хек філе (100г)",
     weight: 100,
