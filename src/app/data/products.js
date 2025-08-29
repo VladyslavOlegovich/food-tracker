@@ -153,6 +153,15 @@ export const products = [
     carbs: 0.2,
   },
   {
+    id: 19,
+    name: "Філе стегна (50г)",
+    weight: 50,
+    calories: 90,
+    protein: 8.1,
+    fat: 6,
+    carbs: 1,
+  },
+  {
     id: 18,
     name: "протеїн з молоком 1% (35г/300г)",
     weight: 350,
