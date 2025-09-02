@@ -126,6 +126,15 @@ export const products = [
     carbs: 36,
   },
   {
+    id: 21,
+    name: "Сочевиця (50г)",
+    weight: 50,
+    calories: 147.5,
+    protein: 12,
+    fat: 0.75,
+    carbs: 23.1,
+  },
+  {
     id: 17,
     name: "Лаваш Вірменський тонкий 1шт (40г)",
     weight: 40,
@@ -169,5 +178,14 @@ export const products = [
     protein: 40,
     fat: 3,
     carbs: 14.1,
+  },
+  {
+    id: 20,
+    name: "snikers (37.5г/1шт)",
+    weight: 37.5,
+    calories: 183,
+    protein: 3.3,
+    fat: 8.7,
+    carbs: 23,
   },
 ];
