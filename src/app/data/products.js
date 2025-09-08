@@ -188,4 +188,14 @@ export const products = [
     fat: 8.7,
     carbs: 23,
   },
+
+  {
+    id: 22,
+    name: "Сирна Запіканка (пів порції)",
+    weight: 37.5,
+    calories: 184,
+    protein: 20.5,
+    fat: 4.5,
+    carbs: 14,
+  },
 ];
