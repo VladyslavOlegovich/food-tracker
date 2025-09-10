@@ -198,4 +198,22 @@ export const products = [
     fat: 4.5,
     carbs: 14,
   },
+  {
+    id: 23,
+    name: "Шоколад (10г)",
+    weight: 10,
+    calories: 58.4,
+    protein: 1.2,
+    fat: 4.6,
+    carbs: 2.2,
+  },
+  {
+    id: 24,
+    name: "Молоко мигдалеве(100г))",
+    weight: 100,
+    calories: 125,
+    protein: 0.5,
+    fat: 1.2,
+    carbs: 2.5,
+  },
 ];
